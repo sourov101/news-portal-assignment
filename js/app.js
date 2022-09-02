@@ -14,7 +14,7 @@ const displayCatagory = (data) => {
         const catagoryDiv = document.createElement('div');
         catagoryDiv.innerHTML = `
         <ul class="list-unstyled">
-            <li><a class="text-decoration-none text-secondary px-3 link-primary" href="#">${info.category_name}</a></li>
+            <li><a onclick="catagoryFunction(${info.category_id})" class="text-decoration-none text-secondary px-3 link-primary" href="#">${info.category_name}</a></li>
         </ul>
 `
 
@@ -25,8 +25,8 @@ const displayCatagory = (data) => {
 }
 
 
-const loadCardId = async () => {
-    const url = `https://openapi.programming-hero.com/api/news/category/05`
+const loadCardId = async (value) => {
+    const url = `https://openapi.programming-hero.com/api/news/category/${value}`
     const res = await fetch(url);
     const data = await res.json();
     displayCard(data.data);
@@ -36,6 +36,7 @@ const loadCardId = async () => {
 
 const displayCard = (data) => {
     const cardContainer = document.getElementById('card-section');
+    cardContainer.textContent = '';
     data.forEach(info => {
         const cardDiv = document.createElement('div');
         cardDiv.innerHTML = `
@@ -68,7 +69,14 @@ const displayCard = (data) => {
 
 
 }
+function catagoryFunction(id) {
 
-loadCardId();
+    const value = '0' + id;
+    loadCardId(value);
+}
 
-loadCatagory(01);
+
+
+loadCardId('08');
+
+loadCatagory();
