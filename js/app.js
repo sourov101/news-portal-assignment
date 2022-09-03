@@ -70,7 +70,7 @@ const displayCard = (data) => {
           ${info.total_view}
           </small> 
           <small class="card-text me-5">${info.rating.number}</small>
-            <button id="arrow-button" class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right text-primary" viewBox="0 0 16 16">
+            <button onclick="newsDetails('${info._id}')" class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right text-primary" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
           </svg></button>
             
@@ -126,7 +126,49 @@ const displayCard = (data) => {
 
 
 
+    // document.getElementById = ('arrow-function').addEventListener('click', function () {
+    //     const cardDetails = document.getElementById('card-details');
+
+
+
+    // })
+
+
 }
+
+function newsDetails(id) {
+    const url = `https://openapi.programming-hero.com/api/news/${id}`
+    fetch(url)
+        .then(response => response.json())
+        .then(data => displayNewsDetails(data.data[0]))
+        .catch(err => alert(err))
+}
+
+
+const displayNewsDetails = (info) => {
+    const newsDetails = document.getElementById('card-details');
+    newsDetails.innerHTML = ``;
+    const newsDiv = document.createElement('div');
+    newsDiv.innerHTML = `
+    <div class="col">
+                    <div class="card h-100">
+                        <img src="${info.thumbnail_url}" class="card-img-top p-5" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">${info.title}</h5>
+                            <p class="card-text">${info.details}</p>
+                            <img src="${info.author.img}" class="img-fluid rounded-circle p-2" style="max-width: 70px;alt="...">
+                            <p class="card-text">Author: ${info.author.name}</p>
+                            <p class="card-text">Publish Date: ${info.author.published_date}</p>
+                            <p class="card-text">Rating: ${info.rating.number}</p>
+                            <p class="card-text">Badge: ${info.rating.badge}</p>
+                            <p class="card-text">Views: ${info.total_view}</p>
+                        </div>
+                    </div>
+                </div>
+    `;
+    newsDetails.appendChild(newsDiv);
+}
+
 function catagoryFunction(id) {
 
     loadCardId(id);
