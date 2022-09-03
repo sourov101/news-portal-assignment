@@ -29,9 +29,16 @@ const displayCatagory = (data) => {
 
 const loadCardId = async (value) => {
     const url = `https://openapi.programming-hero.com/api/news/category/${value}`
-    const res = await fetch(url);
-    const data = await res.json();
-    displayCard(data.data);
+
+    try {
+
+        const res = await fetch(url);
+        const data = await res.json();
+        displayCard(data.data);
+    }
+    catch (e) {
+        console.log(e);
+    }
 }
 
 
@@ -41,10 +48,9 @@ const displayCard = (data) => {
     const processData = () => {
         const cardContainer = document.getElementById('card-section');
         cardContainer.textContent = '';
+
+
         data.forEach(info => {
-
-
-
 
             const cardDiv = document.createElement('div');
             cardDiv.innerHTML = `
@@ -70,7 +76,7 @@ const displayCard = (data) => {
           ${info.total_view}
           </small> 
           <small class="card-text me-5">${info.rating.number}</small>
-            <button onclick="newsDetails('${info._id}')" class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right text-primary" viewBox="0 0 16 16">
+            <button onclick="newsDetails('${info._id}')" class="btn"  data-bs-toggle="modal" data-bs-target="#detailModal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right text-primary" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
           </svg></button>
             
@@ -85,6 +91,8 @@ const displayCard = (data) => {
 
 
         });
+
+        toggleSpinner(false);
     }
 
 
@@ -126,12 +134,7 @@ const displayCard = (data) => {
 
 
 
-    // document.getElementById = ('arrow-function').addEventListener('click', function () {
-    //     const cardDetails = document.getElementById('card-details');
 
-
-
-    // })
 
 
 }
@@ -170,12 +173,20 @@ const displayNewsDetails = (info) => {
 }
 
 function catagoryFunction(id) {
-
+    toggleSpinner(true);
     loadCardId(id);
 
 }
 
-
+const toggleSpinner = isLoading => {
+    const loader = document.getElementById('loader');
+    if (isLoading) {
+        loader.classList.remove('d-none');
+    }
+    else {
+        loader.classList.add('d-none');
+    }
+}
 
 loadCardId('08');
 

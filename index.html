@@ -27,7 +27,8 @@
                                 href="http://127.0.0.1:5500/index.html#">News</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-secondary link-primary" href="#">Blog</a>
+                            <a onlclick="blog" class="nav-link text-secondary link-primary" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop" href="#">Blog</a>
                         </li>
 
                     </ul>
@@ -35,6 +36,53 @@
             </div>
         </nav>
 
+
+        <section>
+
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                            <h4>Question 1:</h4> What is the diffrence between var, let and const?</p>
+                            <p>Answer: The scope of a var variable is functional scope. The scope of a let variable is
+                                block scope. The scope of a const variable is block scope.</p>
+                            <p>
+                            <h4>Question 2:</h4> what is the difference between regular function and arrow function?</p>
+                            <p>Answer: Regular functions created using function declarations or expressions are
+                                constructible and callable. Since regular functions are constructible, they can be
+                                called using the new keyword. However, the arrow functions are only callable and not
+                                constructible, i.e arrow functions can never be used as constructor functions.</p>
+                            <p>
+                            <h4>Question 3:</h4> what is the difference between map, foreach, filter and find?</p>
+                            <p>Answer: The forEach() method does not create a new array based on the given array. The
+                                map() method creates an entirely new array. The forEach() method returns “undefined“.
+                                The map() method returns the newly created array according to the provided callback
+                                function.The filter() method is used to filters all the elements and returns the element
+                                that matches and the element that do not match are removed. The only difference is the
+                                filter() method search through all the elements while find() method search through all
+                                the child elements only.</p>
+                            <h4>Question 4:</h4> why do you use template string?</p>
+                            <p>Answer: It lets us insert/interpolate variables and expressions into strings without
+                                needing to concatenate like in older versions of JavaScript.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
     </header>
 
     <main>
@@ -72,19 +120,49 @@
         </section>
 
         <section class="container text-center">
-            <div id="card-details" class="row row-cols-1 row-cols-md-1 g-4">
 
+
+            <!-- Modal -->
+            <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailModalLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="card-details" class="row row-cols-1 row-cols-md-1 g-4">
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
         </section>
+
+
         <section class="container my-5">
             <!-- card section -->
             <div id="card-section">
-
-
-
             </div>
         </section>
 
+        <!-- loader -->
+        <section id="loader" class="d-none">
+            <div style="height: 400px; " class="d-flex justify-content-center align-items-center">
+                <div class="spinner-border text-warning" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+
+            </div>
+        </section>
 
     </main>
 
