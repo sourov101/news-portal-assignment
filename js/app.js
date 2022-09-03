@@ -56,8 +56,8 @@ const displayCard = (data) => {
             cardDiv.innerHTML = `
         <div class="card mb-3 g-4 shadow" style="max-width: 1500px;">
         <div class="row g-0">
-        <div class="col-md-4 ">
-            <img src="${info.thumbnail_url}" class="img-fluid rounded-start p-2 " alt="...">
+        <div class="col-md-4  text-center text-md-start text-lg-start">
+            <img src="${info.thumbnail_url ? info.thumbnail_url : 'No thumbnail found'}" class="img-fluid rounded-start p-2 " alt="...">
         </div>
         <div class="col-md-8">
             <div class="card-body">
@@ -65,17 +65,17 @@ const displayCard = (data) => {
                 <p  class="card-text">${info.details.slice(0, 200)} ...</p>   
             </div>
             <div class="card-body">
-            <img src="${info.author.img}" class="img-fluid rounded-circle p-2" style="max-width: 70px;alt="...">
-            <small class="card-text me-5">${info.author.name}</small> 
+            <img src="${info.author.img ? info.author.img : 'No Author Pic Found'}" class="img-fluid rounded-circle p-2" style="max-width: 70px;alt="...">
+            <small class="card-text me-5">${info.author.name ? info.author.name : 'No name found'}</small> 
             
             <small class="card-text me-5">
             <svg class="me-2 " xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
             <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
             <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
           </svg>  
-          ${info.total_view}
+          ${info.total_view ? info.total_view : 'No views found'}
           </small> 
-          <small class="card-text me-5">${info.rating.number}</small>
+          <small class="card-text me-5">${info.rating.number ? info.rating.number : 'no ratings found'}</small>
             <button onclick="newsDetails('${info._id}')" class="btn"  data-bs-toggle="modal" data-bs-target="#detailModal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right text-primary" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
           </svg></button>
@@ -99,19 +99,14 @@ const displayCard = (data) => {
     const itemFound = document.getElementById('item-found');
     if (data.length === 0) {
         itemFound.innerHTML = `<p> No News Found </p>`
+        toggleSpinner(false);
     }
     else {
+
         itemFound.innerHTML = `<p>${data.length} items found </p>`
-    }
 
-    data.sort((a, b) => {
 
-        return b.total_view - a.total_view;
-    });
-    data.forEach((e) => {
-        processData();
-    });
-    document.getElementById('view').addEventListener('click', function () {
+
         data.sort((a, b) => {
 
             return b.total_view - a.total_view;
@@ -119,21 +114,30 @@ const displayCard = (data) => {
         data.forEach((e) => {
             processData();
         });
-    })
 
-    document.getElementById('rating').addEventListener('click', function () {
-        data.sort((a, b) => {
+        document.getElementById('view').addEventListener('click', function () {
+            data.sort((a, b) => {
 
-            return b.rating.number - a.rating.number;
-        });
-        data.forEach((e) => {
-            processData();
-        });
+                return b.total_view - a.total_view;
+            });
+            data.forEach((e) => {
+                processData();
+            });
+        })
 
-    })
+        document.getElementById('rating').addEventListener('click', function () {
+            data.sort((a, b) => {
+
+                return b.rating.number - a.rating.number;
+            });
+            data.forEach((e) => {
+                processData();
+            });
+
+        })
 
 
-
+    }
 
 
 
@@ -159,12 +163,12 @@ const displayNewsDetails = (info) => {
                         <div class="card-body">
                             <h5 class="card-title">${info.title}</h5>
                             <p class="card-text">${info.details}</p>
-                            <img src="${info.author.img}" class="img-fluid rounded-circle p-2" style="max-width: 70px;alt="...">
-                            <p class="card-text">Author: ${info.author.name}</p>
-                            <p class="card-text">Publish Date: ${info.author.published_date}</p>
-                            <p class="card-text">Rating: ${info.rating.number}</p>
-                            <p class="card-text">Badge: ${info.rating.badge}</p>
-                            <p class="card-text">Views: ${info.total_view}</p>
+                            <img src="${info.author.img ? info.author.img : 'No Img found'}" class="img-fluid rounded-circle p-2" style="max-width: 70px;alt="...">
+                            <p class="card-text">Author: ${info.author.name ? info.author.name : 'No name found'}</p>
+                            <p class="card-text">Publish Date: ${info.author.published_date ? info.author.published_date : 'No date found'}</p>
+                            <p class="card-text">Rating: ${info.rating.number ? info.rating.number : 'no ratings found'}</p>
+                            <p class="card-text">Badge: ${info.rating.badge ? info.rating.badge : 'No badge found'}</p>
+                            <p class="card-text">Views: ${info.total_view ? info.total_view : 'No views found'}</p>
                         </div>
                     </div>
                 </div>
