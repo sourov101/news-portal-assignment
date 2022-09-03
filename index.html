@@ -40,14 +40,33 @@
     <main>
         <!-- catagory section -->
         <section>
-            <div id="catagory-div" class="d-flex container pt-5">
+            <div id="catagory-div" class="d-lg-flex container pt-5 d-sm-block text-sm-center text-md-center">
 
                 <li class="list-unstyled"><a class="text-decoration-none text-secondary mx-2 py-4 link-primary "
                         href="">Home</a>
                 </li>
             </div>
-
+            <!-- item-found section -->
             <div id="item-found" class="container px-4 mt-4">
+
+            </div>
+            <!-- sort section -->
+            <div class="container mb-5 d-flex ">
+                <div>
+                    <p class="me-4 mt-1">Sort By View:</p>
+                </div>
+                <div class="dropdown">
+                    <a class="btn btn-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Default
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a id="view" class="dropdown-item" href="#">View</a></li>
+
+                        <li><a id="rating" class="dropdown-item" href="#">Rating</a></li>
+                    </ul>
+                </div>
 
             </div>
         </section>

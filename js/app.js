@@ -37,21 +37,21 @@ const loadCardId = async (value) => {
 
 
 const displayCard = (data) => {
-    console.log(data)
-    const itemFound = document.getElementById('item-found');
-    itemFound.innerHTML = `<p>${data.length} items found </span></p>`
+
+    const processData = () => {
+        const cardContainer = document.getElementById('card-section');
+        cardContainer.textContent = '';
+        data.forEach(info => {
 
 
 
-    const cardContainer = document.getElementById('card-section');
-    cardContainer.textContent = '';
-    data.forEach(info => {
-        const cardDiv = document.createElement('div');
-        cardDiv.innerHTML = `
+
+            const cardDiv = document.createElement('div');
+            cardDiv.innerHTML = `
         <div class="card mb-3 g-4 shadow" style="max-width: 1500px;">
         <div class="row g-0">
         <div class="col-md-4 ">
-            <img src="${info.thumbnail_url}" class="img-fluid rounded-start p-2" alt="...">
+            <img src="${info.thumbnail_url}" class="img-fluid rounded-start p-2 " alt="...">
         </div>
         <div class="col-md-8">
             <div class="card-body">
@@ -69,7 +69,7 @@ const displayCard = (data) => {
           </svg>  
           ${info.total_view}
           </small> 
-            
+          <small class="card-text me-5">${info.rating.number}</small>
             <button id="arrow-button" class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right text-primary" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
           </svg></button>
@@ -80,19 +80,56 @@ const displayCard = (data) => {
         </div> 
         </div>`;
 
-        cardContainer.appendChild(cardDiv);
+            cardContainer.appendChild(cardDiv);
+
+
+
+        });
+    }
+
+
+    const itemFound = document.getElementById('item-found');
+    if (data.length === 0) {
+        itemFound.innerHTML = `<p> No News Found </p>`
+    }
+    else {
+        itemFound.innerHTML = `<p>${data.length} items found </p>`
+    }
+
+    data.sort((a, b) => {
+
+        return b.total_view - a.total_view;
     });
+    data.forEach((e) => {
+        processData();
+    });
+    document.getElementById('view').addEventListener('click', function () {
+        data.sort((a, b) => {
+
+            return b.total_view - a.total_view;
+        });
+        data.forEach((e) => {
+            processData();
+        });
+    })
+
+    document.getElementById('rating').addEventListener('click', function () {
+        data.sort((a, b) => {
+
+            return b.rating.number - a.rating.number;
+        });
+        data.forEach((e) => {
+            processData();
+        });
+
+    })
+
 
 
 }
 function catagoryFunction(id) {
 
-
     loadCardId(id);
-
-
-
-
 
 }
 
